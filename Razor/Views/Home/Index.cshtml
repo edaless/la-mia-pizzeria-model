@@ -1,0 +1,299 @@
+﻿<!--
+    — PRIMA PARTE —-
+A questo punto, una volta ripulito GIT e creata una nuova repository,
+per la prima parte riguardante Razor dovete creare un nuovo progetto MVC
+dentro la vostra soluzione chiamato Razor per svolgere gli esercizi
+che trovate nel file esercizi-razor.txt
+Svolgeteli tutti all’interno della view Index del controller HomeController
+che viene generata di default nel nuovo progetto che avete creato.
+
+ -->
+
+
+
+@{
+    ViewData["Title"] = "Home Page";
+
+
+    string nome = "Emanuele";
+    string cognome = "D'Alessandro";
+
+
+}
+
+
+
+<!-- 
+1. Dichiarare una variabile valorizzandola con il nostro nome.
+Dichiarare un'altra variabile valorizzandola con il nostro cognome.
+Stampare il nostro nome e cognome all'interno di un tag h2. 
+-->
+
+
+<h2>
+    @nome
+    @cognome
+</h2>
+
+
+<!-- 
+2. Creare una funzione che stampa la somma dei numeri che vanno da 1 a n 
+(con n passato come parametro - n incluso)
+Stampare dentro uno span il risultato. 
+ -->
+
+
+@{
+
+    int sommaN (int N){
+        int result = 0;
+        for(int i = 1; i <= N; i++){
+            result += i;
+        }
+
+        return result;
+
+
+    }
+}
+
+@{int N = 3;}
+<span>
+    somma da 1 a @N è: 
+    <b>
+        @sommaN(N)
+    </b>
+</span>
+
+
+<!-- 
+3. Contare quante volte la lettera a è presente nalla frase 
+"nel mezzo del cammin di nostra vita" e stampare questo valore in pagina
+ -->
+
+
+
+@{
+    string frase = "nel mezzo del cammin di nostra vita";
+    int M = 0;
+
+    for (int i = 0; i < frase.Count(); i++)
+    {
+        if (@frase[i] == 'a')
+        {
+            M++;
+        }
+          
+    } 
+}
+
+<div>
+    <div>
+        nella frase
+    </div>
+    <div>
+        "@frase"
+    </div>
+    <div>
+        ci sono @M "a"
+    </div>
+
+
+</div>
+
+<br>
+
+<!-- 
+4. Creare una List<int>
+    di 20 numeri interi
+    (generati random da 1 a 90, 1 e 90 inclusi)
+    e mostrare in pagina solo i numeri compresi tra 20 e 70 
+-->
+@{
+    int min = 20;
+    int max = 70;
+}
+
+<div>
+    Numeri fra @min e @max
+</div>
+@{
+    List<int> numbers = new List<int>();
+    Random rnd = new Random();
+
+    for (int i = 0; i < 20; i++)
+    {
+        numbers.Add(rnd.Next(1, 90));        
+    }
+
+    foreach (int number in numbers)
+    {
+        if (number > min && number < max)
+        {
+            <div>
+                @number
+            </div>
+        }
+    }
+}
+
+
+
+<br>
+
+
+<!-- 
+5. Stampare in pagina la data e l'ora attuale (usando la classe DateTime) 
+con il formato anno-mese-giorno ore:minuti:secondi 
+-->
+
+<div>
+    data di oggi:
+</div>
+@{
+    DateTime oggi = DateTime.Now;
+
+    //primo modo
+    //@oggi.ToString("yyyy/MM/dd   HH:mm:ss")
+
+
+
+    //secondo modo
+
+    public class Date
+    {
+    int anno;
+    int mese;
+    int giorno;
+    int ora;
+    int minuti;
+    int secondi;
+
+
+    //costruttore
+    public Date (
+        int anno,
+        int mese,
+        int giorno,
+        int ora,
+        int minuti,
+        int secondi
+    ){
+
+        this.anno = anno;
+        this.mese = mese;
+        this.giorno = giorno;
+        this.ora = ora;
+        this.minuti = minuti;
+        this.secondi = secondi;
+    }
+    }
+    new Date oggi = 
+    int anno = int.Parse(@oggi.ToString("yyyy"));
+    int mese = int.Parse(@oggi.ToString("MM"));
+    int giorno = int.Parse(@oggi.ToString("dd"));
+
+    int ora = int.Parse(@oggi.ToString("HH"));
+    int minuti = int.Parse(@oggi.ToString("mm"));
+    int secondi = int.Parse(@oggi.ToString("ss"));
+}
+
+
+
+<div>
+    @anno/@mese/@giorno   @ora:@minuti:@secondi
+</div>
+
+
+
+<br>
+
+
+
+
+
+<!-- 
+6. Partendo dalla data di oggi (usando la classe DateTime) 
+stampare in pagina
+a. la data di 7 giorni fa
+b. che giorno della settimana è oggi 
+(il risultato dovrà essere il nome del giorno (Lunedì, Martedì, ...)
+c. che giorno della settimana sarà 
+nello stesso giorno e mese di oggi ma tra un anno 
+(il risultato dovrà essere il nome del giorno (Lunedì, Martedì, ...) 
+-->
+
+@{
+    int Ngiorni = 7;
+    DateTime d2 = DateTime.Now.AddDays(-7);
+}
+<div>
+    data di @Ngiorni giorni fa:
+</div>
+
+<div>
+    @d2.ToString("yyyy/MM/dd   HH:mm:ss");
+</div>
+
+
+<br>
+
+@{
+    string settimana( System.DateTime giorno)
+    {
+        if (giorno.DayOfWeek == DayOfWeek.Monday)
+        {
+            return "Lunedì";
+        }
+        else if (giorno.DayOfWeek == DayOfWeek.Tuesday)
+        {
+            return "Martedì";
+        }
+        else if (giorno.DayOfWeek == DayOfWeek.Wednesday)
+        {
+            return "Mercoledì";
+        }
+        else if (giorno.DayOfWeek == DayOfWeek.Thursday)
+        {
+            return "Giovedì";
+        }
+        else if (giorno.DayOfWeek == DayOfWeek.Friday)
+        {
+            return "Venerdì";
+        }
+        else if (giorno.DayOfWeek == DayOfWeek.Saturday)
+        {
+            return "Sabato";
+        }
+        else
+        {
+            return "Domenica";
+        }
+    }
+}
+
+<div>
+    oggi è: @settimana(oggi)
+</div>
+
+
+
+<br>
+
+
+
+
+@{
+    DateTime d3 = DateTime.Now.AddYears(+1);
+
+
+}
+
+
+
+
+
+
+
+
+
